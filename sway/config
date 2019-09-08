@@ -1,0 +1,145 @@
+#general
+include /etc/sway/config.d/*
+set $term alacritty
+set $menu alacritty --class launcher --command bash -c 'echo -n "cmd:\n"; read cmd; swaymsg -t command exec $cmd'
+for_window [app_id="^launcher$"] floating enable, resize set width 20 ppt height 6 ppt, move position 0 px 0 px
+
+#output
+output * bg ~/.config/sway/bg.jpg fill
+
+#input
+input * {
+    xkb_layout de
+    tap enabled
+    natural_scroll enabled
+}
+
+#key bindings
+set $mod Mod4
+set $left h
+set $down j
+set $up k
+set $right l
+bindsym $mod+Return exec $term
+bindsym $mod+d exec $menu
+bindsym $mod+Shift+q kill
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+e exec swaynag --font Ubuntu Mono --text d8dee9 --background 2e3440 --button-background 2e3440 --border 2e3440 --border-bottom-size 0 -t warning -m 'exit sway?' -b 'yes' 'swaymsg exit'
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+bindsym $mod+b splith
+bindsym $mod+v splitv
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+bindsym $mod+f fullscreen
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+bindsym $mod+a focus parent
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
+mode "resize" {
+    bindsym $left resize shrink width 10px
+    bindsym $down resize grow height 10px
+    bindsym $up resize shrink height 10px
+    bindsym $right resize grow width 10px
+    bindsym Left resize shrink width 10px
+    bindsym Down resize grow height 10px
+    bindsym Up resize shrink height 10px
+    bindsym Right resize grow width 10px
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+floating_modifier $mod normal
+bindsym XF86MonBrightnessUp exec light -A 10
+bindsym XF86MonBrightnessDown exec light -U 10
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +10%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -10%
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+#font
+font pango:Ubuntu Mono 12
+
+#status bar
+bar {
+    swaybar_command waybar
+#    position top
+#    status_command while date +'%d-%m-%Y %H:%M:%S'; do sleep 1; done
+#    colors {
+#        background #2E3440
+#        statusline #D8DEE9
+#        separator  #D8DEE9
+#        focused_workspace  #2E3440 #A3BE8C #2E3440
+#        active_workspace   #2E3440 #2E3440 #D8DEE9
+#        inactive_workspace #2E3440 #2E3440 #D8DEE9
+#        urgent_workspace   #2E3440 #2E3440 #D8DEE9
+#        binding_mode       #2E3440 #2E3440 #D8DEE9
+#  }
+}
+
+#colors
+client.focused          #3B4252 #3B4252 #D8DEE9 #3B4252 #3B4252
+client.focused_inactive #3B4252 #3B4252 #D8DEE9 #3B4252 #3B4252
+client.unfocused        #2E3440 #2E3440 #D8DEE9 #2E3440 #2E3440
+client.urgent           #2E3440 #2E3440 #D8DEE9 #2E3440 #2E3440
+client.placeholder      #2E3440 #2E3440 #D8DEE9 #2E3440 #2E3440
+client.background       #2E3440
+
+#gaps
+gaps inner 10
+gaps outer 10
+
+#windows
+default_border pixel 1
+default_floating_border pixel 1
+floating_maximum_size 1000 x 800
+for_window [workspace="10"] floating enable
+
+#xwayland
+xwayland disable
+
+#gtk3
+exec_always {
+    gsettings set org.gnome.desktop.interface gtk-theme 'oomox-nord'
+    gsettings set org.gnome.desktop.interface icon-theme 'oomox-nord'
+    gsettings set org.gnome.desktop.interface font-name 'Ubuntu Mono 12'
+    gsettings set org.gnome.desktop.interface monospace-font-name 'Ubuntu Mono 12'
+    gsettings set org.gnome.desktop.interface document-font-name 'Ubuntu Mono 12'
+    gsettings set org.gnome.desktop.privacy remember-app-usage 'false'
+    gsettings set org.gnome.desktop.privacy remember-recent-files 'false'
+}
