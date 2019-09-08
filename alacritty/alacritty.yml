@@ -2,6 +2,9 @@ window:
   dimensions:
     columns: 0
     lines: 0
+   padding:
+    x: 0
+    y: o
   dynamic_padding: false
   decorations: full
   startup_mode: Windowed
