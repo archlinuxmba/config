@@ -6,6 +6,12 @@
     min-height: 0;
 }
 
+@keyframes blink {
+    to {
+        color: rgba(46, 52, 64, 0.8);
+    }
+}
+
 window#waybar {
     background: rgba(46, 52, 64, 0.8);
     color: #D8DEE9;
@@ -31,12 +37,6 @@ window#waybar {
 
 #battery.warning:not(.charging) {
     color: #EBCB8B;
-}
-
-@keyframes blink {
-    to {
-        color: rgba(46, 52, 64, 0.8);
-    }
 }
 
 #battery.critical:not(.charging) {
